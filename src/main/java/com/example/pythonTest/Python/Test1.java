@@ -6,33 +6,41 @@ import org.apache.commons.exec.PumpStreamHandler;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class Test1 {
 
-    private static String x;
-    private static String y;
+//    private static String x;
+//    private static String y;
+//
+//    public Test1(String x, String y) {
+//        this.x = x;
+//        this.y = y;
+//    }
 
-    public Test1(String x, String y) {
-        this.x = x;
-        this.y = y;
-    }
+    public static String main()  {
 
-    public static void main()  {
+        Date today = new Date();
+        Locale local = new Locale("KOREAN","KOREA");
+        String pattern = "yyyyMMddHHmmss";
+        SimpleDateFormat time_format = new SimpleDateFormat(pattern, local);
         System.out.println("Python Call");
-        String[] command = new String[4];
+
+        String[] command = new String[3];
         command[0] = "python";
-        //command[1] = "\\workspace\\java-call-python\\src\\main\\resources\\test.py";
-        command[1] = "C:/Users/LG/Desktop/Spring/spring.py";
-        command[2] = x;
-        command[3] = y;
+        command[1] = "C:/Users/LG/Desktop/Spring/qrcode_create.py";
+        command[2] = time_format.format(today) + (int)(Math.random() * 10000);
         try {
-            execPython(command);
+            return execPython(command);
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
     }
 
-    public static void execPython(String[] command) throws IOException, InterruptedException {
+    public static String execPython(String[] command) throws IOException, InterruptedException {
         CommandLine commandLine = CommandLine.parse(command[0]);
         for (int i = 1, n = command.length; i < n; i++) {
             commandLine.addArgument(command[i]);
@@ -42,8 +50,12 @@ public class Test1 {
         PumpStreamHandler pumpStreamHandler = new PumpStreamHandler(outputStream);
         DefaultExecutor executor = new DefaultExecutor();
         executor.setStreamHandler(pumpStreamHandler);
-        int result = executor.execute(commandLine);
-        System.out.println("result: " + result);
-        System.out.println("output: " + outputStream.toString());
+        executor.execute(commandLine);
+
+        String output = outputStream.toString();
+        int indexNum = output.indexOf("data");
+        String result = output.substring(indexNum);
+        System.out.println("output: " + result);
+        return result;
     }
 }

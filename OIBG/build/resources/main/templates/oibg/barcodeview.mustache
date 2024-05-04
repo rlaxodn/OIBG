@@ -1,0 +1,9 @@
+{{>layouts/header}}
+<div style="text-align:center">
+    <img src="{{img}}">
+    <form class="container" action="/python/send" method="post">
+        <textarea name="phone" placeholder="전화번호를 입력하시오('-'생략)" rows="1" cols="32" style="resize:none;"></textarea><br>
+        <button type="submit" class="btn btn-primary">이미지 전송</button>
+    </form>
+</div>
+{{>layouts/footer}}

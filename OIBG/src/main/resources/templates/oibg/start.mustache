@@ -1,0 +1,21 @@
+{{>layouts/header}}
+<script type="text/javascript">
+function start() {
+    let form = document.createElement('form');
+    form.action = '/oibg/menu_list';
+    form.method = 'post';
+    document.body.append(form);
+    form.submit();
+}
+function pending() {
+    alert("준비중입니다.");
+}
+</script>
+
+<div style="text-align:center">
+    <img src="/mc.jpg" width="200" height="200" alt="맥도날드" align="baseline" onclick="start()">맥도날드
+    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+    <img src="/star.jpg" width="200" height="200" alt="스타벅스" align="bottom" onclick="pending()">스타벅스
+</div>
+
+{{>layouts/footer}}

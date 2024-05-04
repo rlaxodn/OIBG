@@ -1,0 +1,133 @@
+{{>layouts/header}}
+<script type="text/javascript">
+var side_name="";
+var drink_name="";
+var side_count=0;
+var drink_count=0;
+var set = 1;
+function view() {
+    document.getElementById("list_show").style ="";
+    document.getElementById("single").style ="opacity: 0.5";
+    document.getElementById("set").style ="opacity: 1";
+    set=1;
+}
+function hide(){
+    document.getElementById("list_show").style ="display: none";
+    document.getElementById("set").style ="opacity: 0.5";
+    document.getElementById("single").style ="opacity: 1";
+    set=0;
+}
+function setBG_side(t,side){
+    tr_list=t.parentNode.parentNode.parentNode.parentNode.children
+    for( i=0; i<tr_list.length; i++)
+    {
+        tr_list[i].style.backgroundColor = "#ffffff";
+    }
+    tr=t.parentNode.parentNode.parentNode;
+    tr.style.backgroundColor = (t.checked)?"#FFBB00":"#ffffff";
+    side_name = side;
+    side_count=1;
+}
+function setBG_drink(t,drink){
+    tr_list=t.parentNode.parentNode.parentNode.parentNode.children
+    for( i=0; i<tr_list.length; i++)
+    {
+        tr_list[i].style.backgroundColor = "#ffffff";
+    }
+    tr=t.parentNode.parentNode.parentNode;
+    tr.style.backgroundColor = (t.checked)?"#FFBB00":"#ffffff";
+    drink_name = drink;
+    drink_count=1;
+}
+
+function next_btn(burger){
+    if(set==1){
+         if(drink_count==0 && side_count==0){
+            alert("음료와 사이드를 선택해주세요");
+        }
+        else if(side_count==0){
+            alert("사이드를 선택해주세요");
+        }
+        else if(drink_count==0){
+            alert("음료를 선택해주세요");
+        }
+        else{
+            document.getElementById("button").type = "submit";
+            document.getElementById("button").value = burger+","+side_name+","+drink_name;
+        }
+    }
+    else{
+        document.getElementById("button").type = "submit";
+        document.getElementById("button").value = burger;
+    }
+}
+
+</script>
+
+<div style="text-align:center">
+    <h1><label>{{burger}}</label></h1>
+    <table class="table table-hover">
+        <tbody>
+            <td>
+                <button style="opacity: 0.5" type="button" id="single" onclick="hide()">
+                    <img src="{{burger_img}}">
+                    <label>단품</label>
+                </button>
+            </td>
+            <td>
+                <button type="button" id="set" onclick="view()">
+                    <img src="{{set_img}}">
+                    <label>세트</label>
+                </button>
+            </td>
+        </tbody>
+    </table>
+
+    <form class="container" id="list_show">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>사이드 메뉴</th>
+                <th>이미지</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- 모델에서 보내준 side_list를 사용! 데이터가 여러개라면 반복 출력 됨! -->
+            {{#side_list}}
+                <tr>
+                    <td>{{side}}</td> <!-- 사이드 이름 출력 -->
+                    <td>
+                        <label>
+                            <input type="radio" name="side_choice" onclick="setBG_side(this,'{{side}}')" style="display: none">
+                            <img src="{{img}}">
+                        </label>
+                    </td> <!-- 이미지 출력 -->
+                </tr>
+            {{/side_list}}
+            </tbody>
+        </table>
+
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>음류</th>
+                <th>이미지</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- 모델에서 보내준 drink_list를 사용! 데이터가 여러개라면 반복 출력 됨! -->
+            {{#drink_list}}
+                <tr>
+                    <td>{{drink}}</td> <!-- 음료 이름 출력 -->
+                    <td><label><input type="radio" name="drink_choice" onclick="setBG_drink(this,'{{drink}}')" style="display: none"><img src = "{{img}}"></label></td> <!-- 이미지 출력 -->
+                </tr>
+            {{/drink_list}}
+            </tbody>
+        </table>
+    </form>
+    <form method="post" action="/oibg/add_list">
+        <button id="button" type="button" class="btn btn-primary" name="order" onclick="next_btn('{{burger}}')">담기</button>
+    </form>
+</div>
+
+{{>layouts/footer}}

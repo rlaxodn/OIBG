@@ -1,0 +1,38 @@
+{{>layouts/header}}
+
+<div style="text-align:center">
+    <form method="post" action="/oibg/check_out">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>주문 목록</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- 모델에서 보내준 drink_list를 사용! 데이터가 여러개라면 반복 출력 됨! -->
+            {{#shopping_list}}
+                <label>
+                    <tr>
+                        <td>
+                            <label>{{burger}}</label><br>
+                            <label>{{side}}</label><br>
+                            <label>{{drink}}</label><br>
+                            <button type="submit" class="btn btn-primary" name="order" value="{{order}}">삭제</button>
+                        </td>
+                    </tr>
+                </label>
+            {{/shopping_list}}
+            </tbody>
+        </table>
+    </form>
+
+    <br>
+    <form method="post" action="/oibg/menu_list">
+        <button type="submit" class="btn btn-primary">계속 담기</button>
+    </form>
+    <br>
+    <form method="post" action="/oibg/c_barcode">
+        <button type="submit" class="btn btn-primary">바코드 생성</button>
+    </form>
+</div>
+{{>layouts/footer}}

@@ -1,0 +1,32 @@
+{{>layouts/header}}
+
+<div align="right" style="border: 1px #48BAE4;">
+    <form action="/python/check_out" method="post">
+        <button type="submit" class="btn btn-primary">장바구니</button>
+    </form>
+</div>
+<form class="container" action="/python/next_step" method="post">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>메뉴</th>
+            <th>이미지</th>
+            <th>가격: 단품/세트</th>
+            <th/>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- 모델에서 보내준 menu_list를 사용! 데이터가 여러개라면 반복 출력 됨! -->
+        {{#menu_list}}
+            <tr>
+                <td>{{menu}}</td> <!-- 메뉴 이름 출력 -->
+                <td><img src = "{{img}}"></td> <!-- 이미지 출력 -->
+                <td>{{price}}</td> <!-- 메뉴 가격 출력 -->
+                <td><button type="submit" class="btn btn-primary" name="burger" value="{{menu}}">담기</button></td> <!-- 메뉴 담기버튼 -->
+            </tr>
+        {{/menu_list}}
+        </tbody>
+    </table>
+</form>
+
+{{>layouts/footer}}

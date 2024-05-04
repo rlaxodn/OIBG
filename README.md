@@ -26,6 +26,16 @@ QR코드기반 주문 시스템
 - QR코드 스캔 및 주문정보 불러오기
 <br></br>
 
+## 기술스택
+ - Java
+ - Spring Boot
+ - Intellij
+ - MySQL
+ - Python
+ - Php
+ - Android Studio
+<br></br>
+
 ## 아키텍쳐 구조
 <img src="https://github.com/rlaxodn/OIBG/assets/87809837/005780a1-4289-4010-86db-404488e857e9">
 
